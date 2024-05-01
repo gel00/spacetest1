@@ -13,8 +13,10 @@ const App: React.FC = (): JSX.Element => {
 
   return (
     <div className='App'>
-      <h1 className='text-2xl font-semibold mb-4'>Item List</h1>
-      <ItemList items={items} />
+      <div className='container mx-auto mt-4 px-4 sm:px-8'>
+        <h1 className='text-2xl font-semibold mb-4'>Item List</h1>
+        <ItemList items={items} />
+      </div>
     </div>
   )
 }
