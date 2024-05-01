@@ -8,4 +8,5 @@ export interface UseMockApiState {
   items: Item[]
   loading: boolean
   error: string | null
+  updateParams: (params: { [key: string]: string }) => void
 }

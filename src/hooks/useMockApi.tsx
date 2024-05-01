@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { Item, UseMockApiState } from '../types/types'
 
 const mockItems: Item[] = [
@@ -13,6 +14,7 @@ const mockItems: Item[] = [
 ]
 
 const useMockApi = (): UseMockApiState => {
+  const [searchParams, setSearchParams] = useSearchParams()
   const [items, setItems] = useState<Item[]>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
@@ -22,7 +24,22 @@ const useMockApi = (): UseMockApiState => {
     // Simulate an async API call
     const timeout = setTimeout(() => {
       try {
-        setItems(mockItems)
+        let filteredItems = mockItems.sort((a, b) => a.price - b.price)
+
+        const filter = searchParams.get('filter')
+        if (filter !== null && filter.trim() !== '') {
+          filteredItems = filteredItems.filter(item => item.name.toLowerCase().includes(filter.toLowerCase()))
+        }
+
+        const maxItems = searchParams.get('maxItems')
+        if (maxItems !== null && maxItems.trim() !== '' && maxItems !== 'All') {
+          const maxItemsParsed = parseInt(maxItems, 10)
+          if (!isNaN(maxItemsParsed)) {
+            filteredItems = filteredItems.slice(0, maxItemsParsed)
+          }
+        }
+
+        setItems(filteredItems)
         setLoading(false)
       } catch (e) {
         setError('Failed to fetch items')
@@ -31,9 +48,13 @@ const useMockApi = (): UseMockApiState => {
     }, 1000) // Simulates network delay
 
     return () => clearTimeout(timeout) // Cleanup the timeout
-  }, [])
+  }, [searchParams])
 
-  return { items, loading, error }
+  const updateParams = (params: { [key: string]: string }): void => {
+    setSearchParams(params)
+  }
+
+  return { items, loading, error, updateParams }
 }
 
 export default useMockApi
