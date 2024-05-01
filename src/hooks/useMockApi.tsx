@@ -20,18 +20,25 @@ const useMockApi = (): UseMockApiState => {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    const filter = searchParams.get('filter') ?? ''
+    const maxItems = searchParams.get('maxItems') ?? '5'
+
+    // Set default search params if they are not present
+    if (!searchParams.has('maxItems')) {
+      searchParams.set('maxItems', '5')
+      setSearchParams(searchParams)
+    }
+
     setLoading(true)
     // Simulate an async API call
     const timeout = setTimeout(() => {
       try {
-        let filteredItems = mockItems.sort((a, b) => a.price - b.price)
+        let filteredItems = [...mockItems].sort((a, b) => a.price - b.price)
 
-        const filter = searchParams.get('filter')
         if (filter !== null && filter.trim() !== '') {
           filteredItems = filteredItems.filter(item => item.name.toLowerCase().includes(filter.toLowerCase()))
         }
 
-        const maxItems = searchParams.get('maxItems')
         if (maxItems !== null && maxItems.trim() !== '' && maxItems !== 'All') {
           const maxItemsParsed = parseInt(maxItems, 10)
           if (!isNaN(maxItemsParsed)) {

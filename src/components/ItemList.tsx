@@ -1,13 +1,7 @@
 import React from 'react'
-import { Item } from '../types/types'
+import { Item, ItemListProps } from '../types/types'
 import SkeletonLoader from './SkeletonLoader'
 import { v4 as uuidv4 } from 'uuid'
-
-interface ItemListProps {
-  items: Item[]
-  loading: boolean
-  error: string | null
-}
 
 const RenderError: React.FC<{ error: string }> = ({ error }) => (
   <tr>
