@@ -1,6 +1,6 @@
 // src/components/FilterBar.tsx
 import React from 'react'
-import { FilterBarProps } from '../types/types'
+import { FilterBarProps } from '../../types/types'
 
 const FilterBar: React.FC<FilterBarProps> = ({ value, onSearch, maxItems, onMaxItemsChange, placeholder = 'Search' }) => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -18,6 +18,7 @@ const FilterBar: React.FC<FilterBarProps> = ({ value, onSearch, maxItems, onMaxI
           <select
             value={maxItems}
             onChange={handleSelectChange}
+            aria-label='Max Items'
             className='appearance-none rounded-l border block w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
           >
             <option value='5'>5</option>

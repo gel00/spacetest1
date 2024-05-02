@@ -1,6 +1,6 @@
 import React from 'react'
-import { Item, ItemListProps } from '../types/types'
-import SkeletonLoader from './SkeletonLoader'
+import { Item, ItemListProps } from '../../types/types'
+import SkeletonLoader from '../SkeletonLoader/SkeletonLoader'
 import { v4 as uuidv4 } from 'uuid'
 
 const RenderError: React.FC<{ error: string }> = ({ error }) => (
@@ -13,8 +13,8 @@ const RenderError: React.FC<{ error: string }> = ({ error }) => (
 
 const RenderItems: React.FC<{ items: Item[], headers: string[] }> = ({ items, headers }) => (
   <>
-    {items.map((item) => (
-      <tr key={uuidv4()}>
+    {items.map((item, index) => (
+      <tr key={uuidv4()} data-testid={`item-row-${index}`}>
         {headers.map((header) => (
           <td key={header} className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
             {item[header as keyof Item]}

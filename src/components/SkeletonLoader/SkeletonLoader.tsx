@@ -1,6 +1,6 @@
 const SkeletonLoader = (): JSX.Element => {
   return (
-    <tr>
+    <tr data-testid='skeleton-loader'>
       <td colSpan={3}>
         <div className='h-14 p-5 bg-white animate space-y-2'>
           <div className='space-y-3'>

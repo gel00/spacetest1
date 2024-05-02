@@ -1,8 +1,8 @@
 import React from 'react'
-import './App.css'
+import './styles/App.css'
 import useMockApi from './hooks/useMockApi'
-import ItemList from './components/ItemList'
-import FilterBar from './components/FilterBar'
+import ItemList from './components/ItemList/ItemList'
+import FilterBar from './components/FilterBar/FilterBar'
 
 const App: React.FC = (): JSX.Element => {
   const { items, loading, error, updateParams } = useMockApi()
